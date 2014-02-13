@@ -95,13 +95,14 @@ define(function(require, exports, module){
 
             self.hoses = [];
 
-            function createHose(n){
+            function createHose(dis){
                 var hoseHeight = 830;
                 var acrossHeight = 250;
                 var downHeight = 200 + (400 * Math.random() | 0);
                 var upHeight = 1000 - downHeight - acrossHeight;
-
-                var hoseX = 1200 + 300 * n;
+                
+                var n = (self.hoses.length / 2) | 0;
+                var hoseX = dis + 400 * n;
 
                 var hoseDown = cc.createSprite('holdback1.png', {
                     anchor: [0.5, 0],
@@ -116,19 +117,31 @@ define(function(require, exports, module){
                 self.addChild(hoseDown);
                 self.addChild(hoseUp);
 
-                hoseDown.moveBy(hoseX/200, cc.p(-hoseX - 500, 0)).act();
-                hoseUp.moveBy(hoseX/200, cc.p(-hoseX - 500, 0)).act();
+                var moveByDis = hoseX+500;
+                hoseUp.moveBy(moveByDis/200, cc.p(-moveByDis, 0)).then(function(){
+                    hoseUp.removeFromParent(true);
+                }).act();
+                hoseDown.moveBy(moveByDis/200, cc.p(-moveByDis, 0)).then(function(){
+                    createHose(-500);
+                    var idx = self.hoses.indexOf(hoseDown);
+                    self.hoses.splice(idx, 2);
+                    self.scoreBuf ++;
+                    hoseDown.removeFromParent(true);
+                }).act();
+
                 self.hoses.push(hoseDown, hoseUp);
+                
             };
 
+            this.scoreBuf = 0;
             this.score = 0;
 
             this.on('touchstart', function(){
                 //cc.log('bird:', bird.getBoundingBox());
                 Audio.playEffect('audio/sfx_wing.ogg')
                 if(self.status == 'ready'){
-                    for(var i = 0; i < 100; i++){
-                        createHose(i);
+                    for(var i = 0; i < 4; i++){
+                        createHose(1200);
                     }
 
                     ready.fadeOut(0.5).act();
@@ -177,7 +190,7 @@ define(function(require, exports, module){
                             });
                         }
 
-                        score = Math.ceil(score/2);
+                        score = Math.ceil(score/2) + self.scoreBuf;
 
                         if(score > self.score){
                             self.score = score;
@@ -342,5 +355,4 @@ define(function(require, exports, module){
 
     module.exports = MyScene;
 });
-
 

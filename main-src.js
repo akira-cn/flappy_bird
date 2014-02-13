@@ -56,7 +56,7 @@ require(['cqwrap/index.js', 'src/resource.js', 'src/view/play_scene.js'], functi
 
             //director.offsetY = 0;
             // turn on display FPS
-            // director.setDisplayStats(this.config['showFPS']);
+            director.setDisplayStats(this.config['showFPS']);
 
             // set FPS. the default value is 1.0/60 if you don't call this
             director.setAnimationInterval(1.0 / this.config['frameRate']);
