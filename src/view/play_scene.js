@@ -210,10 +210,10 @@ define(function(require, exports, module){
                     bird.stopAllActions();
                     bird.animate(0.2, 'bird1.png', 'bird2.png', 'bird3.png').repeat().act();
 
-                    var jumpHeight = Math.min(1280 - birdY, 125);
-                    bird.moveBy(0.2, cc.p(0, jumpHeight)).act();
+                    var jumpHeight = Math.min(1280 - birdY, 120);
+                    bird.moveBy(0.2, cc.p(0, jumpHeight), cc.EaseOut, 2).act();
 
-                    bird.rotateTo(0.2, -30).act();
+                    bird.rotateTo(0.2, -20).act();
                     bird.delay(0.2).moveTo(fallTime, cc.p(birdX, 316), cc.EaseIn, 2)
                         .then(function(){
                             if(self.status == 'playing'){
@@ -227,13 +227,14 @@ define(function(require, exports, module){
                                 Audio.playEffect('audio/sfx_hit.ogg');                               
                             }
 
+                            bird.stopAllActions();
                             self.status = 'gameover';
                             
                             setTimeout(function(){
                                 self.onGameOver();
                             }, 200)
                         }).act();
-                    bird.delay(0.2).rotateTo(fallTime, 90, 0, cc.EaseIn, 2).act();                    
+                    bird.delay(0.5).rotateTo(fallTime - 0.3, 90, 0, cc.EaseIn, 2).act();                    
                 }
             });
 
