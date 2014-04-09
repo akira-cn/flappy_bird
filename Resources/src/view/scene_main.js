@@ -97,9 +97,13 @@ define(function(require, exports, module){
             });
             this.addChild(scoreSprite);
             this.scoreSprite = scoreSprite;
+            
+            var num = 500;
+            var hosesLayer = self.createHose(num);
 
             this.subscribe('flap', function f(){
-                self.createHose();
+                var moveByDis = 400 * num + 1200;
+                hosesLayer.moveBy(moveByDis/200, cc.p(-moveByDis, 0)).act();
                 self.unsubscribe('flap', f);
                 self.scheduleUpdate();
             });
@@ -236,7 +240,7 @@ define(function(require, exports, module){
                 }                
             });
         },
-        createHose: function(){
+        createHose: function(max){
             var hoseHeight = 830;
             var acrossHeight = 250;
 
@@ -250,8 +254,7 @@ define(function(require, exports, module){
 
             this.hosesLayer = hosesLayer;
 
-
-            for(var i = 0; i < 500; i++){
+            for(var i = 0; i < max; i++){
                 var downHeight = 200 + (400 * Math.random() | 0);
                 var upHeight = 1000 - downHeight - acrossHeight;
                 var hoseX = 1200 + 400 * i;
@@ -269,11 +272,9 @@ define(function(require, exports, module){
                 hosesLayer.addChildToBatch(hoseDown, 'res/img/hoses.png');
                 hosesLayer.addChildToBatch(hoseUp, 'res/img/hoses.png');
 
-                var moveByDis = hoseX+500;
-
                 this.hoses.push([hoseDown, hoseUp]);
             }
-            hosesLayer.moveBy(moveByDis/200, cc.p(-moveByDis, 0)).act();
+            return hosesLayer;
         }
     });
 
