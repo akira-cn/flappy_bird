@@ -1,0 +1,39 @@
+{
+  "name": "cqwrap",
+  "description": "the cocos2d-h5 game creator",
+  "version": "0.2.2",
+  "author": {
+    "name": "akira-cn",
+    "email": "akira.cn@gmail.com"
+  },
+  "contributors": [
+    {
+      "name": "akira-cn",
+      "email": "akira.cn@gmail.com"
+    }
+  ],
+  "dependencies": {
+    "fs.extra": "~1.2.1"
+  },
+  "keywords": [
+    "cocos2d",
+    "html5"
+  ],
+  "homepage": "http://www.androidzh.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/akira-cn/cqwrap"
+  },
+  "bin": {
+    "cqwrap" : "./bin/cqwrap.js"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "licenses": [
+    {
+      "type": "The MIT License",
+      "url": "http://www.opensource.org/licenses/mit-license.php"
+    }
+  ]
+}
